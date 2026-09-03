@@ -2,23 +2,32 @@ package org.it.unicam.cs.mpgc.rpg125943;
 
 public class Player extends Entity {
 
+
     private int incrementalExp = 100;
 
-    protected Player(String name, int stamina, int attack, int defense, int level, double exp, boolean alive) {
-        super(name, stamina, attack, defense, level, exp, alive);
+    protected Player(String name, int stamina, int attack, int defense, int speed, int level, double exp, boolean alive, Styles style) {
+        super(name, stamina, attack, defense, speed, level, exp, alive, style);
     }
+
+    public static Player brawler(String name) {
+        return new Player(name, 150, 8, 10, 5, 1, 0.0, true, Styles.BRAWLER);
+    }
+
 
     public static Player inFighter(String name) {
-        return new Player(name, 50, 20, 10, 1, 0.0, true);
+        return new Player(name, 100, 20, 5, 8, 1, 0.0, true, Styles.IN_FIGHTER);
     }
 
-    public static Player longGuard(String name) {
-        return new Player(name, 100, 5, 20, 1, 0.0, true);
+
+    public static Player defenseLab(String name) {
+        return new Player(name, 80, 5, 20, 10, 1, 0.0, true, Styles.DEFENSE_LAB);
     }
+
 
     public static Player outBoxer(String name) {
-        return new Player(name, 150, 10, 5, 1, 0.0, true);
+        return new Player(name, 50, 10, 8, 20, 1, 0.0, true, Styles.OUT_BOXER);
     }
+
 
     private void gainExp(double exp) {
         this.exp += exp;
@@ -31,21 +40,33 @@ public class Player extends Entity {
 
     private void levelUp() {
         this.level++;
-        switch (this) {
-            case Player player when this.getStamina() == 50 -> {
-                this.attack += 5;
-                this.defense += 2;
-            }
-            case Player player when this.getStamina() == 100 -> {
-                this.stamina += 10;
-                this.defense += 5;
-            }
-            case Player player when this.getStamina() == 150 -> {
+        switch (style){
+            case BRAWLER:
+                this.stamina += 20;
                 this.attack += 2;
-                this.stamina += 25;
-            }
-            default -> {
-            }
+                this.defense += 2;
+                this.speed += 1;
+                break;
+            case IN_FIGHTER:
+                this.stamina += 10;
+                this.attack += 4;
+                this.defense += 1;
+                this.speed += 2;
+                break;
+            case DEFENSE_LAB:
+                this.stamina += 5;
+                this.attack += 1;
+                this.defense += 4;
+                this.speed += 2;
+                break;
+            case OUT_BOXER:
+                this.stamina += 5;
+                this.attack += 2;
+                this.defense += 1;
+                this.speed += 4;
+                break;
+            default:
+                break;
         }
     }
 }
