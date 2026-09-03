@@ -3,17 +3,18 @@ package org.it.unicam.cs.mpgc.rpg125943;
 abstract public class Entity {
 
     private String name;
-    private int health;
-    private int attack;
-    private int defense;
-    private int level;
-    private double exp;
+    protected int stamina;
+    protected int attack;
+    protected int defense;
+    protected int level;
+    protected double exp;
     private boolean alive=true;
 
 
-    public Entity(String name, int health, int attack, int defense, int level, double exp, boolean alive) {
+
+    protected Entity(String name, int stamina, int attack, int defense, int level, double exp, boolean alive) {
         this.name = name;
-        this.health = health;
+        this.stamina = stamina;
         this.attack = attack;
         this.defense = defense;
         this.level = level;
@@ -29,9 +30,9 @@ abstract public class Entity {
     }
 
     public void takeDamage(int damage) {
-        this.health -= damage;
-        if (this.health <= 0) {
-            this.health = 0;
+        this.stamina -= damage;
+        if (this.stamina <= 0) {
+            this.stamina = 0;
             this.alive = false;
         }
     }
@@ -42,15 +43,12 @@ abstract public class Entity {
 
 
 
-
-
-
     public String getName() {
         return name;
     }
 
-    public int getHealth() {
-        return health;
+    public int getStamina() {
+        return stamina;
     }
 
     public int getAttack() {
