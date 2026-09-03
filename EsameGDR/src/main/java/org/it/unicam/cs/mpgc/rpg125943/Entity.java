@@ -49,10 +49,11 @@ abstract public class Entity {
             return;
         }
 
-        int damage = this.attack - target.getDefense();
-        if (damage > 0) {
-            target.takeDamage(damage);
-        }
+        double reductionFactor = 100 / (100.0 + target.getDefense());
+        int damage = Math.max(1, (int) Math.round(this.attack* reductionFactor));
+        
+        target.takeDamage(damage);
+        System.out.println(this.getName() + " ha attaccato " + target.getName() + " causando " + damage + " danni!");
 
         if (!target.isAlive() && this instanceof Esperienza attacker) {
             attacker.gainExp(target.getExp());
