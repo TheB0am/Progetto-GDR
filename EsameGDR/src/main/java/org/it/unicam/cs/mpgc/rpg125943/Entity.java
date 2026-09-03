@@ -12,7 +12,7 @@ abstract public class Entity {
     protected int level;
     protected double exp;
     private boolean alive=true;
-    protected Styles style;
+
 
     private static final double dodgePerSpeed=0.015;
     private static final double dodgeRelativo=0.015;
@@ -23,7 +23,7 @@ abstract public class Entity {
 
 
 
-    protected Entity(String name, int stamina, int attack, int defense, int speed , int level, double exp, boolean alive, Styles style) {
+    protected Entity(String name, int stamina, int attack, int defense, int speed , int level, double exp, boolean alive) {
         this.name = name;
         this.stamina = stamina;
         this.attack = attack;
@@ -32,7 +32,6 @@ abstract public class Entity {
         this.level = level;
         this.exp = exp;
         this.alive = alive;
-        this.style = style;
     }
 
     public double dodgeChance(Entity attacker) {
@@ -54,6 +53,11 @@ abstract public class Entity {
         if (damage > 0) {
             target.takeDamage(damage);
         }
+
+        if (!target.isAlive() && this instanceof Esperienza attacker) {
+            attacker.gainExp(target.getExp());
+        }
+
     }
 
     public void takeDamage(int damage) {
@@ -67,8 +71,6 @@ abstract public class Entity {
     public boolean isAlive() {
         return alive;
     }
-
-
 
     public String getName() {
         return name;
@@ -96,10 +98,6 @@ abstract public class Entity {
 
     public double getExp() {
         return exp;
-    }
-
-    public Styles getStyle(){
-        return style;
     }
 
 }

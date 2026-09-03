@@ -2,11 +2,13 @@ package org.it.unicam.cs.mpgc.rpg125943;
 
 public class Player extends Entity {
 
+    private Styles style;
 
     private int incrementalExp = 100;
 
     protected Player(String name, int stamina, int attack, int defense, int speed, int level, double exp, boolean alive, Styles style) {
-        super(name, stamina, attack, defense, speed, level, exp, alive, style);
+        super(name, stamina, attack, defense, speed, level, exp, alive);
+        this.style = style;
     }
 
     public static Player brawler(String name) {
@@ -69,4 +71,9 @@ public class Player extends Entity {
                 break;
         }
     }
+
+    public Styles getStyle(){
+        return style;
+    }
+
 }
