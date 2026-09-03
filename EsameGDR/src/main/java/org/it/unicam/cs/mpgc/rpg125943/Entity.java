@@ -51,7 +51,7 @@ abstract public class Entity {
 
         double reductionFactor = 100 / (100.0 + target.getDefense());
         int damage = Math.max(1, (int) Math.round(this.attack* reductionFactor));
-        
+
         target.takeDamage(damage);
         System.out.println(this.getName() + " ha attaccato " + target.getName() + " causando " + damage + " danni!");
 

@@ -1,6 +1,6 @@
 package org.it.unicam.cs.mpgc.rpg125943;
 
-public class Player extends Entity {
+public class Player extends Entity implements Esperienza {
 
     private Styles style;
 
