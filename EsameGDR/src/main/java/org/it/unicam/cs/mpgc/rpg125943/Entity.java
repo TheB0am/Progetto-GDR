@@ -10,10 +10,11 @@ abstract public class Entity {
     protected int defense;
     protected int speed;
     protected int level;
-    protected double exp;
+    protected double exp;  //Exp verrà usata in maniera differente, player guadagna exp per aumentare di livello, il nemico invece garantirà quell'exp una volta sconfitto.
     private boolean alive=true;
 
 
+    //Parametri utilizzati per il bilanciamento del sistema di schivata.
     private static final double dodgePerSpeed=0.015;
     private static final double dodgeRelativo=0.015;
     private static final double dodgeCap=0.75;
@@ -35,29 +36,32 @@ abstract public class Entity {
     }
 
     public double dodgeChance(Entity attacker) {
-        double baseDodge = this.speed * dodgePerSpeed;
-        double modificatore = (this.speed - attacker.getSpeed()) * dodgeRelativo;
+        double baseDodge = this.speed * dodgePerSpeed; // probabilità di schivata basato sulla velocità dell'attacker
+        double modificatore = (this.speed - attacker.getSpeed()) * dodgeRelativo; // garantisce un vantaggio a chi è più voloce o vice versa.
         double totalDodge = baseDodge + modificatore;
 
-        return Math.max(dodgeMin, Math.min(dodgeCap, totalDodge));
+        return Math.max(dodgeMin, Math.min(dodgeCap, totalDodge)); //Garantisce comunque una possibilità minima di schivata in caso di estrema inferiorità di velocita.
     }
 
-    public void attack (Entity target) {
-        double evasione = target.dodgeChance(this);
+    public AttackResult attack (Entity target) {
+        double evasione = target.dodgeChance(this); //ottiene la probabilità di schivata dal metodo precedente, valutando target con parametro attacker.
+
+        //valuta se l'attaco è stato evaso o meno
         if (RANDOM.nextDouble() < evasione){
-            System.out.println(target.getName() + " ha schivato l'attacco di " + this.getName() + "!");
-            return;
+            return new AttackResult(this, target, true, 0, false); //ritorna un oggetto AttackResult con il risultato dell'attacco
         }
 
+        //Sistema di riduzione del danno che garantisce un danno minimo anche con un estrama disparità di difesa.
         double reductionFactor = 100 / (100.0 + target.getDefense());
         int damage = Math.max(1, (int) Math.round(this.attack* reductionFactor));
 
         target.takeDamage(damage);
-        System.out.println(this.getName() + " ha attaccato " + target.getName() + " causando " + damage + " danni!");
 
         if (!target.isAlive() && this instanceof Esperienza attacker) {
             attacker.gainExp(target.getExp());
         }
+
+        return new AttackResult(this, target, false, damage, !target.isAlive());
 
     }
 

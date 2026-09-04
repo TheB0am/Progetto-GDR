@@ -3,9 +3,10 @@ package org.it.unicam.cs.mpgc.rpg125943;
 public class Player extends Entity implements Esperienza {
 
     private Styles style;
-
     private int incrementalExp = 100;
 
+
+    //Factory method che garantisce la creazione di Entità player di classi diverse
     protected Player(String name, int stamina, int attack, int defense, int speed, int level, double exp, boolean alive, Styles style) {
         super(name, stamina, attack, defense, speed, level, exp, alive);
         this.style = style;
@@ -31,7 +32,8 @@ public class Player extends Entity implements Esperienza {
     }
 
 
-    private void gainExp(double exp) {
+    @Override
+    public void gainExp(double exp) {
         this.exp += exp;
         if (this.exp >= incrementalExp) {
             this.levelUp();
@@ -40,6 +42,7 @@ public class Player extends Entity implements Esperienza {
         }
     }
 
+    //Grazie a questo metodo ogni classe avrà un diverso LVL UP che migliorerà le sue statistiche di punta.
     private void levelUp() {
         this.level++;
         switch (style){
