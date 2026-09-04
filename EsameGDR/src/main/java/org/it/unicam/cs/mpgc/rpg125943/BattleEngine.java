@@ -19,11 +19,12 @@ public class BattleEngine {
                 result = enemy.attack(player);
                 listener.onAttack(result);
             }
+        }
 
             Entity winner = player.isAlive() ? player : enemy;
             Entity loser = player.isAlive() ? enemy : player;
             listener.onBattleEnd(winner, loser);
-        }
+
     }
 
 }
