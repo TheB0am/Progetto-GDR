@@ -6,6 +6,7 @@ abstract public class Entity {
 
     private String name;
     protected int stamina;
+    protected int maxStamina;
     protected int attack;
     protected int defense;
     protected int speed;
@@ -24,9 +25,10 @@ abstract public class Entity {
 
 
 
-    protected Entity(String name, int stamina, int attack, int defense, int speed , int level, double exp, boolean alive) {
+    protected Entity(String name, int stamina, int maxStamina, int attack, int defense, int speed , int level, double exp, boolean alive) {
         this.name = name;
         this.stamina = stamina;
+        this.maxStamina = maxStamina;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
@@ -72,6 +74,12 @@ abstract public class Entity {
             this.alive = false;
         }
     }
+
+    public void heal(){
+        this.stamina = maxStamina;
+    }
+
+    public int getMaxStamina(){return maxStamina;}
 
     public boolean isAlive() {
         return alive;

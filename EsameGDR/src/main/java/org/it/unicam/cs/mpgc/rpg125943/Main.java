@@ -1,8 +1,7 @@
 package org.it.unicam.cs.mpgc.rpg125943;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.PrimitiveIterator;
 import java.util.Scanner;
 
 
@@ -50,9 +49,17 @@ public class Main implements BattleEngine.BattleListener {
 
         List<Enemy> normalEnemies = List.of(
                 Enemy.nemicoCasuale("Vincenzo", 1),
+                Enemy.nemicoCasuale("Glad0s", 1),
+                Enemy.nemicoCasuale("Soap", 1),
                 Enemy.nemicoCasuale("Boros", 2),
+                Enemy.nemicoCasuale("Looter", 2),
+                Enemy.nemicoCasuale("Pasta", 2),
                 Enemy.nemicoCasuale("Dogmeat",3),
+                Enemy.nemicoCasuale("Vladimir",3),
+                Enemy.nemicoCasuale("Mob",3),
                 Enemy.nemicoCasuale("Freeman",4),
+                Enemy.nemicoCasuale("B",4),
+                Enemy.nemicoCasuale("C",4),
                 Enemy.nemicoCasuale("John Box",5)
         );
 
@@ -60,6 +67,10 @@ public class Main implements BattleEngine.BattleListener {
             if (!player.isAlive()) break;
             System.out.println("Un nuovo nemico e' apparso: " + enemy.getName() + " (Livello: " + enemy.getLevel() + ")");
             battleEngine.runBattle(player, enemy, this);
+
+            if (player.isAlive()) {
+                player.heal();
+            }
         }
 
         if (player.isAlive()) {
