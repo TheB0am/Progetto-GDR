@@ -1,5 +1,21 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+javafx {
+    version = "21.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+application{
+    mainClass = 'org.it.unicam.cs.mpgc.rpg125943.ui.App'
 }
 
 group = 'org.example'
