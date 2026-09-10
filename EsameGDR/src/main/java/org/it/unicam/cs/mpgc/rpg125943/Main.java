@@ -9,6 +9,7 @@ public class Main implements BattleEngine.BattleListener {
 
     private static final Scanner SCANNER = new Scanner(System.in);
     private final BattleEngine battleEngine = new BattleEngine();
+    private final GameSession gameSession = new GameSession(battleEngine);
 
     public static void main(String[] args) {
         new Main().start();
@@ -38,54 +39,29 @@ public class Main implements BattleEngine.BattleListener {
         return choiceReader(name, choice);
     }
 
-    private static Boss chooseBoss() {
-        Boss[] bosses = { Boss.bigBoss(), Boss.Joe(), Boss.vas(), Boss.dutch() };
-        return bosses[(int) (Math.random() * bosses.length)];
-    }
-
     private void start() {
         System.out.println("Bevenuto nella WBC!!!");
         Player player = createPlayer();
 
-        List<Enemy> normalEnemies = List.of(
-                Enemy.nemicoCasuale("Vincenzo", 1),
-                Enemy.nemicoCasuale("Glad0s", 1),
-                Enemy.nemicoCasuale("Soap", 1),
-                Enemy.nemicoCasuale("Boros", 2),
-                Enemy.nemicoCasuale("Looter", 2),
-                Enemy.nemicoCasuale("Pasta", 2),
-                Enemy.nemicoCasuale("Dogmeat",3),
-                Enemy.nemicoCasuale("Vladimir",3),
-                Enemy.nemicoCasuale("Mob",3),
-                Enemy.nemicoCasuale("Freeman",4),
-                Enemy.nemicoCasuale("B",4),
-                Enemy.nemicoCasuale("C",4),
-                Enemy.nemicoCasuale("John Box",5)
+        List<Enemy> normalEnemies = GameSession.defaultEnemies();
+
+        boolean won = gameSession.play(
+                player,
+                normalEnemies,
+                this,
+                enemy -> System.out.println("Un nuovo nemico e' apparso: " + enemy.getName() + " (Livello: " + enemy.getLevel() + ")"),
+                boss -> {
+                    System.out.println("Ora dovrai sfidare il campione");
+                    System.out.println("Il campione e': " + boss.getName());
+                }
         );
 
-        for (Enemy enemy : normalEnemies) {
-            if (!player.isAlive()) break;
-            System.out.println("Un nuovo nemico e' apparso: " + enemy.getName() + " (Livello: " + enemy.getLevel() + ")");
-            battleEngine.runBattle(player, enemy, this);
 
-            if (player.isAlive()) {
-                player.heal();
-            }
-        }
-
-        if (player.isAlive()) {
-            System.out.println("Ora dovrai sfidare il campione");
-            Boss boss = chooseBoss();
-            System.out.println("Il campione è: " + boss.getName());
-            battleEngine.runBattle(player, boss, this);
-        }
-
-        if (player.isAlive()) {
+        if (won) {
             System.out.println("Congratulazioni sei il nuovo Campione del mondo!");
         } else {
             System.out.println("Game over");
         }
-
     }
 
     @Override

@@ -6,7 +6,6 @@ public class Player extends Entity implements Esperienza {
     private int incrementalExp = 30;
 
 
-    //Factory method che garantisce la creazione di Entità player di classi diverse
     protected Player(String name, int stamina, int maxStamina , int attack, int defense, int speed, int level, double exp, boolean alive, Styles style) {
         super(name, stamina, maxStamina , attack, defense, speed, level, exp, alive);
         this.style = style;
