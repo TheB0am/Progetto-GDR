@@ -25,16 +25,21 @@ public class App extends Application implements BattleEngine.BattleListener {
     private final ComboBox<Styles> styleBox = new ComboBox<>();
     private final Button startButton = new Button("Inizia");
     private final Button attackButton = new Button("Attacca");
+    private final Button restartButton = new Button("Ricomincia");
+
+    private final Label playerStatsLabel = new Label("-");
+    private final Label enemyStatsLabel = new Label("-");
 
     private final BattleEngine battleEngine = new BattleEngine();
 
+    private Player player;
     private Turns session;
 
 
     @Override
     public void start(Stage stage) {
         ring.setEditable(false);
-        ring.setPrefHeight(300);
+        ring.setPrefHeight(320);
 
         nameField.setPromptText("Nome del personaggio");
 
@@ -42,23 +47,31 @@ public class App extends Application implements BattleEngine.BattleListener {
         styleBox.setValue(Styles.BRAWLER);
 
         attackButton.setDisable(true);
+        restartButton.setDisable(true);
 
         startButton.setOnAction(e -> startGame());
         attackButton.setOnAction(e -> attack());
+        restartButton.setOnAction(e -> restart());
 
         HBox setup = new HBox(10, nameField, styleBox, startButton);
-        HBox battleControls = new HBox(10, attackButton);
-        VBox root = new VBox(10, statusLabel, setup, battleControls, ring);
+        HBox battleControls = new HBox(10, attackButton, restartButton);
+
+        VBox playerStatsBox = new VBox(5, new Label("Il tuo personaggio"), playerStatsLabel);
+        VBox enemyStatsBox = new VBox(5, new Label("Avversario attuale"), enemyStatsLabel);
+        HBox statsBox = new HBox(40, playerStatsBox, enemyStatsBox);
+
+
+        VBox root = new VBox(10, statusLabel, setup, battleControls, statsBox, ring);
         root.setPadding(new Insets(20));
 
-        stage.setScene(new Scene(root, 550, 450));
+        stage.setScene(new Scene(root, 750, 600));
         stage.setTitle("Benvenuto nella WBC!!!");
         stage.show();
     }
 
     private void startGame() {
         ring.clear();
-        Player player = createPlayer();
+        player = createPlayer();
 
         List<Enemy> enemies = GameSession.defaultEnemies();
 
@@ -77,7 +90,26 @@ public class App extends Application implements BattleEngine.BattleListener {
         attackButton.setDisable(false);
 
         statusLabel.setText("Inizia la battaglia! Premi 'Attacca' per combattere.");
+        refreshStats();
 
+    }
+
+    private void refreshStats() {
+        if (player != null){
+            playerStatsLabel.setText(formatStats(player));
+        }
+
+        Entity opponent = (session != null ? session.getCurrentOpponent() : null);
+        enemyStatsLabel.setText(opponent != null ? formatStats(opponent) : "Nessun avversario");
+    }
+
+    private String formatStats(Entity entity) {
+        return entity.getName() + "\n"
+                + "Stamina: " + entity.getStamina() + "/" + entity.getMaxStamina() + "\n"
+                + "Attacco: " + entity.getAttack() + "\n"
+                + "Difesa: " + entity.getDefense() + "\n"
+                + "Velocita': " + entity.getSpeed() + "\n"
+                + "Livello: " + entity.getLevel();
     }
 
     private void attack(){
@@ -86,12 +118,36 @@ public class App extends Application implements BattleEngine.BattleListener {
         }
 
         session.attack();
+        refreshStats();
 
         if (session.isFinished()){
             attackButton.setDisable(true);
+            restartButton.setDisable(false);
             statusLabel.setText(session.hasWon() ? "Hai vinto la battaglia!" : "Hai perso la battaglia!");
         }
     }
+
+    private void restart() {
+        player = null;
+        session = null;
+
+        ring.clear();
+
+        nameField.clear();
+        nameField.setDisable(false);
+        styleBox.setValue(Styles.BRAWLER);
+        styleBox.setDisable(false);
+        startButton.setDisable(false);
+
+        attackButton.setDisable(true);
+        restartButton.setDisable(true);
+
+        playerStatsLabel.setText("-");
+        enemyStatsLabel.setText("-");
+
+        statusLabel.setText("Inserisci nome e stile, poi premi 'Inizia'");
+    }
+
 
     private Player createPlayer() {
         String rawName = nameField.getText();
