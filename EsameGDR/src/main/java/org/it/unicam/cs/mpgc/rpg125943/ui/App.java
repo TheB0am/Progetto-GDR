@@ -12,13 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
 import javafx.geometry.Insets;
 
-import org.it.unicam.cs.mpgc.rpg125943.Enemy;
-import org.it.unicam.cs.mpgc.rpg125943.Player;
-import org.it.unicam.cs.mpgc.rpg125943.Entity;
-import org.it.unicam.cs.mpgc.rpg125943.AttackResult;
-import org.it.unicam.cs.mpgc.rpg125943.BattleEngine;
-import org.it.unicam.cs.mpgc.rpg125943.GameSession;
-import org.it.unicam.cs.mpgc.rpg125943.Styles;
+import org.it.unicam.cs.mpgc.rpg125943.*;
 
 import java.util.List;
 
@@ -30,11 +24,12 @@ public class App extends Application implements BattleEngine.BattleListener {
     private final TextField nameField = new TextField();
     private final ComboBox<Styles> styleBox = new ComboBox<>();
     private final Button startButton = new Button("Inizia");
+    private final Button attackButton = new Button("Attacca");
 
     private final BattleEngine battleEngine = new BattleEngine();
-    private final GameSession gameSession = new GameSession(battleEngine);
 
-    private Player player;
+    private Turns session;
+
 
     @Override
     public void start(Stage stage) {
@@ -46,10 +41,14 @@ public class App extends Application implements BattleEngine.BattleListener {
         styleBox.getItems().addAll(Styles.values());
         styleBox.setValue(Styles.BRAWLER);
 
+        attackButton.setDisable(true);
+
         startButton.setOnAction(e -> startGame());
+        attackButton.setOnAction(e -> attack());
 
         HBox setup = new HBox(10, nameField, styleBox, startButton);
-        VBox root = new VBox(10, statusLabel, setup, ring);
+        HBox battleControls = new HBox(10, attackButton);
+        VBox root = new VBox(10, statusLabel, setup, battleControls, ring);
         root.setPadding(new Insets(20));
 
         stage.setScene(new Scene(root, 550, 450));
@@ -59,11 +58,12 @@ public class App extends Application implements BattleEngine.BattleListener {
 
     private void startGame() {
         ring.clear();
-        player = createPlayer();
+        Player player = createPlayer();
 
         List<Enemy> enemies = GameSession.defaultEnemies();
 
-        boolean won = gameSession.play(
+        session = new Turns(
+                battleEngine,
                 player,
                 enemies,
                 this,
@@ -71,7 +71,26 @@ public class App extends Application implements BattleEngine.BattleListener {
                 boss -> ring.appendText("Ora dovrai sfidare il campione: " + boss.getName() + "\n")
         );
 
-        statusLabel.setText(won ? "Hai vinto! Sei il nuovo Campione del mondo!" : "Game over!");
+        nameField.setDisable(true);
+        styleBox.setDisable(true);
+        startButton.setDisable(true);
+        attackButton.setDisable(false);
+
+        statusLabel.setText("Inizia la battaglia! Premi 'Attacca' per combattere.");
+
+    }
+
+    private void attack(){
+        if (session == null){
+            return;
+        }
+
+        session.attack();
+
+        if (session.isFinished()){
+            attackButton.setDisable(true);
+            statusLabel.setText(session.hasWon() ? "Hai vinto la battaglia!" : "Hai perso la battaglia!");
+        }
     }
 
     private Player createPlayer() {

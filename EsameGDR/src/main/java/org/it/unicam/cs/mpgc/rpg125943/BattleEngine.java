@@ -27,4 +27,22 @@ public class BattleEngine {
 
     }
 
+    public boolean playerTurn(Player player, Entity enemy, BattleListener listener) {
+        AttackResult result = player.attack(enemy);
+        listener.onAttack(result);
+
+        if (enemy.isAlive()) {
+            result = enemy.attack(player);
+            listener.onAttack(result);
+        }
+
+        if(!player.isAlive() || !enemy.isAlive()) {
+            Entity winner = player.isAlive() ? player : enemy;
+            Entity loser = player.isAlive() ? enemy : player;
+            listener.onBattleEnd(winner, loser);
+            return false;
+        }
+        return true;
+    }
+
 }
