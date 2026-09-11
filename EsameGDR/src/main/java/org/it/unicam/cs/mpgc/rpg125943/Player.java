@@ -22,7 +22,7 @@ public class Player extends Entity implements Esperienza {
 
 
     public static Player defenseLab(String name) {
-        return new Player(name, 80, 80 , 5, 20, 10, 1, 0.0, true, Styles.DEFENSE_LAB);
+        return new Player(name, 100, 100 , 5, 40, 12, 1, 0.0, true, Styles.DEFENSE_LAB);
     }
 
 
@@ -46,26 +46,26 @@ public class Player extends Entity implements Esperienza {
         this.level++;
         switch (style){
             case BRAWLER:
-                this.maxStamina += 20;
-                this.attack += 2;
+                this.maxStamina += 25;
+                this.attack += 3;
                 this.defense += 2;
-                this.speed += 1;
+                this.speed += 2;
                 break;
             case IN_FIGHTER:
                 this.maxStamina += 10;
-                this.attack += 4;
+                this.attack += 8;
                 this.defense += 1;
                 this.speed += 2;
                 break;
             case DEFENSE_LAB:
                 this.maxStamina += 5;
                 this.attack += 1;
-                this.defense += 4;
-                this.speed += 2;
+                this.defense += 10;
+                this.speed += 3;
                 break;
             case OUT_BOXER:
                 this.maxStamina += 5;
-                this.attack += 2;
+                this.attack += 1;
                 this.defense += 1;
                 this.speed += 4;
                 break;

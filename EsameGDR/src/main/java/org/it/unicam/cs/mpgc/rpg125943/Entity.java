@@ -54,7 +54,7 @@ abstract public class Entity {
         }
 
         //Sistema di riduzione del danno che garantisce un danno minimo anche con un estrama disparità di difesa.
-        double reductionFactor = 100 / (100.0 + target.getDefense());
+        double reductionFactor = 100 / (100.0 + target.getDefense() * 1.5 );
         int damage = Math.max(1, (int) Math.round(this.attack* reductionFactor));
 
         target.takeDamage(damage);

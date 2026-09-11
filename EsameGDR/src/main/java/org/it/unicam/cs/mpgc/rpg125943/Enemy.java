@@ -12,8 +12,8 @@ public class Enemy extends Entity {
 
 
     public static Enemy nemicoCasuale(String name, int level){
-        int stamina = 15 + RANDOM.nextInt(21) + (level * 10);
         int maxStamina = 15 + RANDOM.nextInt(21) + (level * 10);
+        int stamina = maxStamina;
         int attack = 5 + RANDOM.nextInt(11) + (level * 5);
         int defense = 5 + RANDOM.nextInt(11) + level;
         int speed = 5 + RANDOM.nextInt(11);
