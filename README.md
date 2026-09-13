@@ -30,8 +30,8 @@ org.it.unicam.cs.mpgc.rpg125943.ui           interfaccia grafica JavaFX (App, Me
 
 ## Requisiti
 
-- JDK 17 o superiore
-- Non serve installare Gradle: il progetto include il wrapper (`gradlew`)
+- JDK 25 o superiore
+- Gradle 9
 
 ## Come eseguirlo
 
