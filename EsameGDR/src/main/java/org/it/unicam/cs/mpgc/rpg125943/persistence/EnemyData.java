@@ -1,4 +1,8 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.persistence;
+
+import org.it.unicam.cs.mpgc.rpg125943.model.Boss;
+import org.it.unicam.cs.mpgc.rpg125943.model.Enemy;
+import org.it.unicam.cs.mpgc.rpg125943.model.Entity;
 
 /**
  * Stesso principio di {@code PlayerData}, ma per un nemico o un boss: la
@@ -65,9 +69,9 @@ public class EnemyData {
      */
     public Enemy toEnemy() {
         if (bossType) {
-            return new Boss(name, stamina, maxStamina, attack, defense, speed, level, exp, stamina > 0);
+            return Boss.restore(name, stamina, maxStamina, attack, defense, speed, level, exp, stamina > 0);
         }
-        return new Enemy(name, stamina, maxStamina, attack, defense, speed, level, exp, stamina > 0);
+        return Enemy.restore(name, stamina, maxStamina, attack, defense, speed, level, exp, stamina > 0);
     }
 
     public String getName() {

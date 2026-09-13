@@ -1,5 +1,8 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.engine.auto;
 
+
+import org.it.unicam.cs.mpgc.rpg125943.engine.BattleEngine;
+import org.it.unicam.cs.mpgc.rpg125943.model.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -58,7 +61,7 @@ public class Main implements BattleEngine.BattleListener {
         System.out.println("Bevenuto nella WBC!!!");
         Player player = createPlayer();
 
-        List<Enemy> normalEnemies = GameSession.defaultEnemies();
+        List<Enemy> normalEnemies = Opponents.defaultEnemies();
 
         boolean won = gameSession.play(
                 player,

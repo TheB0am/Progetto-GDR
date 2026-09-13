@@ -1,4 +1,4 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.model;
 
 public class Boss extends Enemy {
 
@@ -47,6 +47,16 @@ public class Boss extends Enemy {
         return new Boss("Dutch Van Der Linde", stamina, maxStamina , attack, defense, speed, 10000, exp, true);
     }
 
-
+    /**
+     * Ricostruisce un Boss con uno stato completo gia' noto (es. da un
+     * salvataggio), preservando il suo tipo esatto (non un Enemy generico).
+     * Pubblico apposta: il costruttore e' protected e vive nel package
+     * "model", mentre chi ricostruisce da un salvataggio ({@code EnemyData},
+     * nel package "persistence") non potrebbe altrimenti accedervi.
+     */
+    public static Boss restore(String name, int stamina, int maxStamina, int attack, int defense,
+                               int speed, int level, double exp, boolean alive) {
+        return new Boss(name, stamina, maxStamina, attack, defense, speed, level, exp, alive);
+    }
 
 }

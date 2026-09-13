@@ -1,4 +1,8 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.engine;
+
+import org.it.unicam.cs.mpgc.rpg125943.model.AttackResult;
+import org.it.unicam.cs.mpgc.rpg125943.model.Entity;
+import org.it.unicam.cs.mpgc.rpg125943.model.Player;
 
 public class BattleEngine {
 

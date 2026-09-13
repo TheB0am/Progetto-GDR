@@ -1,10 +1,12 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.ui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import org.it.unicam.cs.mpgc.rpg125943.engine.BattleEngine;
+import org.it.unicam.cs.mpgc.rpg125943.persistence.SaveManager;
 
 /**
  * Punto di ingresso dell'applicazione JavaFX.

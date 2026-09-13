@@ -1,4 +1,7 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.engine.turns;
+
+import org.it.unicam.cs.mpgc.rpg125943.engine.BattleEngine;
+import org.it.unicam.cs.mpgc.rpg125943.model.*;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -125,7 +128,7 @@ public class Turns {
     /**
      * Sceglie il prossimo avversario in base a {@code enemyIndex}: se ci
      * sono ancora nemici nella lista prende il prossimo, altrimenti passa
-     * al boss. Usa {@link GameSession#randomBoss()} invece di avere una
+     * al boss. Usa {@link Opponents#randomBoss()} invece di avere una
      * propria copia duplicata della stessa logica di scelta del boss.
      */
     private void pickNextOpponent() {
@@ -137,7 +140,7 @@ public class Turns {
             }
         } else {
             fightingBoss = true;
-            Boss boss = GameSession.randomBoss();
+            Boss boss = Opponents.randomBoss();
             currentOpponent = boss;
             if (onBossAppear != null) {
                 onBossAppear.accept(boss);

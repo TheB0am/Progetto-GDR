@@ -1,4 +1,4 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

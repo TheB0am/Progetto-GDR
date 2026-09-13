@@ -1,4 +1,7 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.persistence;
+
+import org.it.unicam.cs.mpgc.rpg125943.model.Player;
+import org.it.unicam.cs.mpgc.rpg125943.model.Styles;
 
 public class PlayerData {
 
@@ -32,7 +35,7 @@ public class PlayerData {
     }
 
     public Player toPlayer() {
-        return new Player(name, stamina, maxStamina, attack, defense, speed, level, exp,stamina > 0, style);
+        return Player.restore(name, stamina, maxStamina, attack, defense, speed, level, exp, stamina > 0, style);
     }
 
     public String getName() {

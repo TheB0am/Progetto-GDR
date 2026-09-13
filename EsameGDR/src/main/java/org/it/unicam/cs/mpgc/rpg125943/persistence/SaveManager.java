@@ -1,7 +1,8 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.it.unicam.cs.mpgc.rpg125943.model.Player;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

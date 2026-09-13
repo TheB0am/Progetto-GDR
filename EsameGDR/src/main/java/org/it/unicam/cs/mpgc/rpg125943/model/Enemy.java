@@ -1,4 +1,4 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.model;
 
 import java.util.Random;
 
@@ -19,6 +19,18 @@ public class Enemy extends Entity {
         int speed = 5 + RANDOM.nextInt(11);
         int exp = 10 + RANDOM.nextInt(11) + (level * 2);
         return new Enemy(name, stamina, maxStamina , attack, defense, speed, level, exp, true);
+    }
+
+    /**
+     * Ricostruisce un Enemy con uno stato completo gia' noto (es. da un
+     * salvataggio). Pubblico apposta: il costruttore e' protected e vive
+     * nel package "model", mentre chi ricostruisce da un salvataggio
+     * ({@code EnemyData}, nel package "persistence") non potrebbe
+     * altrimenti accedervi.
+     */
+    public static Enemy restore(String name, int stamina, int maxStamina, int attack, int defense,
+                                int speed, int level, double exp, boolean alive) {
+        return new Enemy(name, stamina, maxStamina, attack, defense, speed, level, exp, alive);
     }
 
 

@@ -1,4 +1,4 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.model;
 
 
 /**
@@ -37,6 +37,19 @@ public class Player extends Entity implements Esperienza {
         return new Player(name, style.getBaseStamina(), style.getBaseStamina(), style.getBaseAttack(), style.getBaseDefense(), style.getBaseSpeed(), 1, 0.0, true, style);
     }
 
+    /**
+     * Ricostruisce un Player con uno stato completo gia' noto (es. da un
+     * salvataggio). A differenza di {@link #of(String, Styles)}, che crea
+     * SEMPRE un personaggio nuovo di livello 1, questo permette di
+     * specificare ogni valore. Pubblico apposta: il costruttore e' protected
+     * e vive nel package "model", mentre chi ricostruisce un Player da un
+     * salvataggio ({@code PlayerData}, nel package "persistence") non
+     * potrebbe altrimenti accedervi.
+     */
+    public static Player restore(String name, int stamina, int maxStamina, int attack, int defense,
+                                 int speed, int level, double exp, boolean alive, Styles style) {
+        return new Player(name, stamina, maxStamina, attack, defense, speed, level, exp, alive, style);
+    }
 
     /**
      * Chiamato da {@link Entity#attack(Entity)} quando questo player

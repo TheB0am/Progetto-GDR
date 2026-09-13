@@ -1,4 +1,4 @@
-package org.it.unicam.cs.mpgc.rpg125943;
+package org.it.unicam.cs.mpgc.rpg125943.ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -9,8 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-
+import org.it.unicam.cs.mpgc.rpg125943.engine.BattleEngine;
+import org.it.unicam.cs.mpgc.rpg125943.engine.turns.Turns;
+import org.it.unicam.cs.mpgc.rpg125943.model.*;
+import org.it.unicam.cs.mpgc.rpg125943.persistence.EnemyData;
+import org.it.unicam.cs.mpgc.rpg125943.persistence.GameSaveData;
+import org.it.unicam.cs.mpgc.rpg125943.persistence.SaveManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +128,7 @@ public class GameScreen extends VBox implements BattleEngine.BattleListener {
         ring.clear();
         player = Player.of(readName(), readStyle());
 
-        List<Enemy> enemies = GameSession.defaultEnemies();
+        List<Enemy> enemies = Opponents.defaultEnemies();
 
         session = new Turns(
                 battleEngine,
