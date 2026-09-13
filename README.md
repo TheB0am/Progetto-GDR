@@ -38,7 +38,6 @@ org.it.unicam.cs.mpgc.rpg125943.ui           interfaccia grafica JavaFX (App, Me
 **Versione con interfaccia grafica (JavaFX):**
 
 ```bash
-cd EsameGDR
 ./gradlew build
 ./gradlew run
 ```
